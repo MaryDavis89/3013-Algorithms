@@ -21,7 +21,7 @@
 
 |  M Number     | Signature  |
 |:------------:|:----------|
-| <br><br>____________________________________________________ | <br><br> __________________________________________________  |
+| <br><br>_________M10332084_________________________ | <br><br> ____________Mary Davis___________  |
 
 
 
@@ -30,6 +30,8 @@
 
 Suppose that an open-address hash table has a capacity of 1000 and it contains 100 elements. What is the table's load factor? 
 
+A - The load factor is .1 because it number of entries divided by the number of slots in the table
+
 -----
 
 ## Q2
@@ -37,39 +39,52 @@ Suppose that an open-address hash table has a capacity of 1000 and it contains 1
 I plan to put 1000 items in a hash table, and I want the average number of accesses in a successful search to be about 3.0.
 
 - About how big should the array be if I use open addressing with linear probing? 
+A - 3000
 - About how big should the array be if I use chained hashing? 
-
+A - At least 1000/3
 -----
 
 ## Q3
 
 Define collision in a hash table.
+A - Collision is where a item gets a key to a slot that is already taken. You must find the next available
 
 -----
 
 ## Q4
 
 If you're picking a table size for your hash table, which sizes should you stay away from?
+A - You should stay away from numbers that are powers of 2 and mulitples of 10. Prime numbers are ideal.
 
 -----
 
 ## Q5
 
 What is generally a good choice for a load factor (&lambda;) when using open addressing?
+A - You want you load factor to be less than 1
+
 
 ## Q6
 
 Is the choice for load factor (&lambda;) the same when using open addressing?
+A- No, because of the linked lists it is acceptable to have a load factor above 1.
 
 ## Q7
 
 Draw a hash table with open addressing and a size of 9. Use the hash function `k%9`. Insert the keys: 5, 29, 20, 0, 27 and 18 into your table (in that order).
+A-
+
+Open addressing with linear probing as collision resolution
+
+0       1       2      3      4       5       6       7       8
+0      18      29      20     27      5
 
 -----
 
 ## Q8
 
 What is the correct formula for the load factor?
+A - Number of entries dived by capacity of the array
 
 -----
 
@@ -96,6 +111,34 @@ Draw 3 separate hash tables that results from using a given hash function (below
 Strings to hash:
 
 **Epd, DcS, Fcf, Gco, Qzj, Wvc, RUC, ejJ, iwR, zyz**
+281, 250, 271, 281, 309, 304, 234, 281, 306, 365
+linear probing
+0 - Qzj
+1 - iwR
+2 - zyz
+3 - RUC
+4
+5
+6 - Epd
+7 - Fcf
+8 - DcS
+9 - Gco
+10 - Wvc
+11 - ejJ
+
+Chaining
+0 - Qzj
+1 -
+2 - zyz
+3 - RUC
+4
+5
+6 - Epd -> Gco -> ejJ
+7 -Fcf -> Wvc
+8 - DcS
+9 - iwR
+10 - 
+11 - 
 
 -----
 
@@ -113,6 +156,8 @@ Strings to hash:
   - What is clustering?
   - What type of collision resolution does this typically occur with?
   - What is the generic solution to the clustering problem? Your answer shouldn’t just be: “use new hash function”. It should be discussed using general terms and definitions.
+  
+  A - clustering is where elements start to key around the same slots in the array. Common with linear probing. You could use double hashing to fix it where the second hash function can vary.
 
 -----
 
@@ -120,7 +165,7 @@ Strings to hash:
 
 - **Given:** The formula for unsuccessful search in a hash table is: `O(1/1-`&lambda;`)`
 - **Describe:** The time for searches increases as the load factor increases. Explain why this happens as described in our study guide.
-
+ A - Because the more slots filled the more slots to check for the value/key.
 -----
 
 ## Q13
@@ -144,6 +189,8 @@ Strings to hash:
 - **Problem:** Describe why this is a problem, and how it effects the search space in your table.
 - **Proposed Solution:** What could you do the alleviate the problems that occur because of the initial choices made? Describe the relationship between table size and the increment size.
 
+A - It is a problem because 3 is multiple of 9 so you would never get the numbers outside multiples of 3. Increase your increment number to something that is not a multiple of your table size. 
+
 -----
 
 ## Q16
@@ -153,8 +200,11 @@ Suppose you wish to make a hash table of all the students at MCSU University usi
 You decide to implement the hash-table using an array/vector with 4999 elements, with **quadratic probing** to resolve conflicts. (By the way, both 4999 and 997 are prime numbers.) For each of the following three possible hash functions, say whether it is a good or bad choice, and explain why in one sentence. Note that digit<sub>x</sub> refers to some integer representing one of the eight digits that comprise SIDs at MCSU U (so x takes on values 0 to 7).
 
 1. `digit`<sub>0</sub>` + digit`<sub>1</sub>` + digit`<sub>2</sub>` + ... + digit`<sub>7</sub>` mod 4999`
+  - Bad, youre going to have collisions every 10 students
 2. `SID number mod 4999`
+   - Good, everyone will hash to the number they already are until you reach 5000 students.
 3. `(digit`<sub>0</sub>` + digit`<sub>1</sub>` * 9971 + digit`<sub>2</sub>` * 9972 + ... + digit`<sub>7</sub>` * 9977) mod 4999`
+  - Bad, kind of like number one but just one a larger scale because of the multiplication.
 
 -----
 
@@ -162,14 +212,19 @@ You decide to implement the hash-table using an array/vector with 4999 elements,
 
 Given a collision resolution technique (array with linear probing, array with quadratic probing, array with double hashing, and array with chaining), which approach would be most appropriate for an application in which many keys that hash to the same value are likely to be present? Explain why.
 
+A - double hashing. You can set it up potentially that so values that would hash to the same key go to different ones
+
 -----
 
 ## Q18
 
 Explain how deletion is performed in both **probing** and **chaining** hash tables.
-
+ A - Search for key, when found delete. Then need to use a special key to place in the slot after being deleted and make you sure you handle that exception when searching through for the next time.
+ Chaining you search the key and then go down the list until found delete and reconnect appropriate pointers so you dont lose any values
+ 
 -----
 
 ## Q19
 
 A hash table needs to be resized if load factor of a table exceeds **0.7**. What are the important things to do when resizing a hash table?
+A-  you want to double the size to really lower the load factor and give you a lot space. Add so that its not an even number, using a prime number is always ideal.
